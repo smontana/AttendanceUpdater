@@ -1,0 +1,45 @@
+@media print {
+
+  body, 
+  .qpa-custom-dates-solution-report {
+    font: "Myriad Set Pro","Helvetica Neue","Helvetica","Arial",sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  header h1.title {
+    /*background-color: currentColor;*/
+    border-color: currentColor;
+    border-radius: 5px;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .sections-pane button {
+    display: none
+  }
+
+  .qpa-card text.c3-gauge-value {
+    font-size: 12px !important;
+    font-weight: bold;
+  }
+
+  /*--------*/
+
+  page[size="A4"] {
+    background: #d3d3d3;
+    width: 21cm;
+    height: 29.7cm;
+    display: block;
+    margin:0 0 0 0;
+    margin-bottom: 0.5cm;
+    box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+  }
+  body, page[size="A4"] {
+    background: #d3d3d3;
+    margin: 0;
+    box-shadow: 0;
+  }
+
+}

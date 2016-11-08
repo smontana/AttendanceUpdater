@@ -1,0 +1,49 @@
+mixin qpa_ytd_select_workgroups_by_solution(placeholder)
+
+  #qpa_ytd_select_workgroups_sec.app-section
+    .page-rows
+      h1.text-center
+        | QPA WorkGroup Reports | Year-to-Date
+      span.vert-space
+
+      .qpa-homepage-header
+        h3.text-center Choose Solution
+
+      .qpa-solution-selection-container
+        .qpa-card-group
+
+          #qpa_ytd_solution_workgroups(data-selection="CD").qpa-homepage-card.qpa-card-group-card.animate-button.attribute-selection
+            | CD
+          #qpa_ytd_solution_workgroups(data-selection="CRM").qpa-homepage-card.qpa-card-group-card.animate-button.attribute-selection
+            | CRM
+          #qpa_ytd_solution_workgroups(data-selection="CSO").qpa-homepage-card.qpa-card-group-card.animate-button.attribute-selection
+            | CSO
+          #qpa_ytd_solution_workgroups(data-selection="DMS").qpa-homepage-card.qpa-card-group-card.animate-button.attribute-selection
+            | DMS
+          #qpa_ytd_solution_workgroups(data-selection="F&I").qpa-homepage-card.qpa-card-group-card.animate-button.attribute-selection
+            = 'F&I'
+          #qpa_ytd_solution_workgroups(data-selection="RTS").qpa-homepage-card.qpa-card-group-card.animate-button.attribute-selection
+            | RTS
+
+      .qpa-workgroup-report
+        h3.text-center WORKGROUP REPORT
+
+    script.
+      require('./renderer-process/qpa/pdf')
+      window.$ = window.jQuery = require('jquery');
+
+      var query_qpa = require('./main-process/db/queries/qpa_queries.js');
+      var custom_qpa_solution_avgs_gauge_row = require('./main-process/db/graph_builders/qpa/qpa_all_solutions_custom_range_gauge_row.js');
+      var custom_qpa_solution_avgs_bar_graphs = require('./main-process/db/graph_builders/qpa/qpa_all_solutions_custom_range_bar_graphs.js');
+
+      $(document).ready(function(event){
+        $('.attribute-selection').click(function (e) {
+          e.preventDefault();
+          var selection_attribute = this.getAttribute("data-selection")
+
+          var constructed_query = query_qpa.get_QPA_solution_workgroups_avg_by_yr + ' ' + "'" + selection_attribute + "'";
+
+          $('.qpa-solution-selection-container').hide();
+          $('.qpa-workgroup-report').addClass('is-visible');
+        })
+      })

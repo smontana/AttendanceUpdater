@@ -1,0 +1,29 @@
+{
+  "name": "wfo-app",
+  "productName": "WFO Reporting Tool",
+  "description": "Client Services Reporting Tool Brought to you by the WFO Team at Dealertrack.",
+  "version": "0.1.0",
+  "author": "Stephen Montana",
+  "copyright": "© 2016, Dealertrack",
+  "main": "background.js",
+  "dependencies": {
+    "c3": "^0.4.11",
+    "electron-json-storage": "^2.0.0",
+    "fs-jetpack": "^0.9.2",
+    "jquery": "^3.0.0",
+    "lodash": "^4.13.1",
+    "moment": "^2.13.0",
+    "seriate": "^0.7.1"
+  },
+  "packageNameTemplate": "{{name}}-v{{version}}-{{platform}}-{{arch}}",
+  "osx": {
+    "build": "1",
+    "identifier": "com.example.wfo-app",
+    "LSApplicationCategoryType": "public.app-category.productivity",
+    "//codeSignIdentitiy": {
+      "dmg": "Developer ID Application: Company Name (APPIDENTITY)",
+      "MAS": "3rd Party Mac Developer Application: Company Name (APPIDENTITY)",
+      "MASInstaller": "3rd Party Mac Developer Installer: Company Name (APPIDENTITY)"
+    }
+  }
+}

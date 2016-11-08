@@ -1,0 +1,148 @@
+mixin get_qpa_custom_dates_team_report(placeholder)
+
+  #qpa_choose_dates_teams_sec.app-section
+    .page-rows
+      h1.text-center
+        | QPA - Team Report | Custom Date Range
+
+      span.vert-space
+
+      .qpa-date-selection-container
+        script.
+          var supervisor_obj;
+
+          function supervisor_change_func(obj) {
+            //- var supe_name = document.qpa_team_pick_custom_dates_form.elements.qpa_team_supervisor.getAttribute('data-supervisor')
+            //- var solution = document.qpa_team_pick_custom_dates_form.elements.qpa_team_supervisor.getAttribute('data-solution')
+
+            var supe_name = obj.getAttribute('data-supervisor')
+            var solution = obj.getAttribute('data-solution')
+
+            var supervisor_obj_props = {
+              supervisor_name: supe_name,
+              solution_value: solution
+            }
+
+            return supervisor_obj = supervisor_obj_props;
+          }
+
+        form#qpa_team_pick_custom_dates_form(name="qpa_team_pick_custom_dates_form")
+          .form-group
+
+            .qpa-date-selection.qpa-start-date-selection
+              label(for='qpa_team_start_date_input')
+              ='Start Date   '
+              input(type="text" name="qpa_team_start_date_input" id="qpa_team_start_date" placeholder="Start Date" class="datepicker" data-value="")
+
+            .qpa-date-selection.qpa-end-date-selection
+              label(for='qpa_team_end_date_input')
+              ='End Date   '
+              input(type="text" name="qpa_team_end_date_input" id="qpa_team_end_date" placeholder="End Date" class="datepicker" data-value="")
+
+            .qpa-supervisor-selection
+              label(for='qpa_team_supervisor_input')
+              ='Supervisor   '
+              select(name="qpa_team_supervisor_input" id="qpa_team_supervisor" placeholder="Supervisor" value="" onchange="supervisor_change_func(this);").form-control
+                //- option(value="" disabled selected)="Supervisor"
+                - var Supervisors = locals['Supervisors']
+                for supe in Supervisors
+                  option(value=supe.EMPID data-solution=supe.Solution data-supervisor=supe.Supervisor)= supe.SolutionSupervisor
+
+          .form-submit
+            button#qpa_solution_cutom_dates_form_submit.btn.btn-large.btn-primary(type="submit")
+              | Submit
+
+          span.vert-space
+
+      .qpa-custom-dates-team-report
+        .custom-date-report-options
+          button#qpa_custom_go_back.btn.btn-large.btn-default.animate-button Back
+          button#qpa_print_pdf.btn.btn-large.btn-default.animate-button PDF
+          span#pdf-path
+
+        .gauge-row-flexbox
+
+          .qpa-card
+            .content
+              h3.text-center.gauge-title
+                = 'CD'
+              #team_avg_gauge
+
+        .qpa-big-card.main-chart
+          h3.text-center.qpa-custom-range-bar-chart
+          #qpa_team_custom_range_bar_chart
+
+        //- .data-table
+        //-   table.table-striped
+        //-     thead
+        //-       tr
+        //-         th Name
+        //-         th Kind
+        //-         th File Size
+        //-     tbody
+        //-       tr
+        //-         td photon.css
+        //-         td CSS
+        //-         td 28K
+        //-       tr
+        //-         td photon.css
+        //-         td CSS
+        //-         td 28K
+        //-       tr
+        //-         td photon.css
+        //-         td CSS
+        //-         td 28K
+
+    script.
+      require('./renderer-process/qpa/pdf')
+
+      var query_qpa = require('./main-process/db/queries/qpa_queries.js');
+      var custom_qpa_team_avg_gauge = require('./main-process/db/graph_builders/qpa/qpa_team_custom_range_gauge.js');
+      var custom_qpa_solution_avgs_bar_graphs = require('./main-process/db/graph_builders/qpa/qpa_all_solutions_custom_range_bar_graphs.js');
+
+      var start_date_value = document.forms.qpa_team_pick_custom_dates_form.elements.qpa_team_start_date_input.value;
+      var end_date_value = document.forms.qpa_team_pick_custom_dates_form.elements.qpa_team_end_date_input.value;
+
+      var pretty_start_date = document.forms.qpa_team_pick_custom_dates_form.elements.qpa_team_start_date.value;
+      var pretty_end_date = document.forms.qpa_team_pick_custom_dates_form.elements.qpa_team_end_date.value;
+
+      function show_custom_qpa_solution_report(query) {
+        var query_to_execute = query
+        var graph_builder_procs = [
+                                    custom_qpa_team_avg_gauge.build_custom_range_team_avg_gauge,
+                                    custom_qpa_solution_avgs_bar_graphs.build_qpa_all_solution_avgs_custom_range_bar_chart
+                                  ]
+
+        execute_and_build_sql(query_to_execute, graph_builder_procs)
+      }
+
+      $(document).ready(function(event){
+
+        $('.datepicker').pickadate({
+          format: 'mm/dd/yyyy',
+          formatSubmit: 'yyyy-mm-dd',
+          hiddenName: true,
+          min: new Date(2016,0,1),
+          max: new Date()
+        });
+
+        $('form').submit(function (e) {
+          e.preventDefault();
+
+          $('#qpa_choose_dates_solution_sec h1.text-center').text('QPA - All Solutions | ' + pretty_start_date + ' - ' + pretty_end_date);
+
+          $('.qpa-big-card.main-chart h3').text('QPA Counts By Solution | ' + pretty_start_date + ' to ' + pretty_end_date);
+
+          var constructed_query = query_qpa.query_QPA_scores_by_team_and_supervisor + ' ' + "'" + start_date_value + "'" + ', ' + "'" + end_date_value + "'" + ', ' + ', ' + "'" + solution_value + "'" + ', ' + "'" + supervisor_name + "'";
+
+          show_custom_qpa_solution_report(constructed_query);
+
+          $('.qpa-date-selection-container').hide();
+          $('.qpa-custom-dates-team-report').addClass('is-visible');
+        });
+
+        $('#qpa_custom_go_back').click(function() {
+          $('.qpa-date-selection-container').show();
+        });
+
+      });

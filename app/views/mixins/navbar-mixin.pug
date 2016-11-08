@@ -1,0 +1,27 @@
+mixin navbar_builder(title)
+  div.pane.pane-sm.sidebar
+    div.logo
+
+    div.sidebar-menu
+      nav.nav-group
+        h1.nav-group-title.text-center Menu
+
+        div.sidebar-menu-items
+
+          button#homepage.nav-group-item.btn.btn-large.btn-default.icon.icon-home.main-btn.main-click-el
+            = ' Absences'
+
+          button#interactions.nav-group-item.btn.btn-large.btn-default.icon.icon-chart-area.main-btn.main-click-el
+            = ' Late Arrivals'
+
+          button#attendance.nav-group-item.btn.btn-large.btn-default.icon.icon-clock.main-btn.main-click-el
+            = ' Early Departures'
+
+    div.sidebar-menu
+      nav.nav-group
+        h1.nav-group-title.text-center Report Mgr Links
+
+        div.sidebar-menu-items.wallboard-links
+          #wallboard_dms
+            a.nav-group-item.btn.btn-large.btn-default.wall-board-item(href='http://nhpnisql002.dt.inc/Reports_demo/Pages/Folder.aspx?ItemPath=%2fAbsence+-+Late+-+Left+Early+Reports%2fDMS&ViewMode=Detail' type='button')
+              ='DMS'

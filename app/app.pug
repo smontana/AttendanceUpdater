@@ -1,0 +1,18 @@
+extends views/layout.pug
+
+include ./views/mixins/sections/add_absences
+include ./views/mixins/sections/add_lates
+include ./views/mixins/sections/add_earlies
+
+block content
+
+  .pane.sections-list
+
+    #homepage_sec.app-section
+      +add_absences('ABSENCES')
+
+    #interactions_sec.app-section
+      +add_lates('LATE ARRIVALS')
+
+    #attendance_sec.app-section
+      +add_earlies('EARLY DEPARTURES')
