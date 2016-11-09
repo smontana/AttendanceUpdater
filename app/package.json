@@ -1,10 +1,10 @@
 {
-  "name": "wfo-app",
-  "productName": "WFO Reporting Tool",
-  "description": "Client Services Reporting Tool Brought to you by the WFO Team at Dealertrack.",
+  "name": "wfo-dms-attendance-app",
+  "productName": "WFO DMS Attendance Update Tool",
+  "description": "A small tool to aid with updating excused absences, late arrivals, and early departures for DMS Team Members.",
   "version": "0.1.0",
   "author": "Stephen Montana",
-  "copyright": "© 2016, Dealertrack",
+  "copyright": "© 2016, Stephen Montana",
   "main": "background.js",
   "dependencies": {
     "c3": "^0.4.11",
@@ -18,7 +18,7 @@
   "packageNameTemplate": "{{name}}-v{{version}}-{{platform}}-{{arch}}",
   "osx": {
     "build": "1",
-    "identifier": "com.example.wfo-app",
+    "identifier": "com.example.wfo-dms-attendance-app",
     "LSApplicationCategoryType": "public.app-category.productivity",
     "//codeSignIdentitiy": {
       "dmg": "Developer ID Application: Company Name (APPIDENTITY)",
