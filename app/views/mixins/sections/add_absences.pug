@@ -2,9 +2,24 @@ mixin add_absences(title)
 
   .page-rows
     h1.text-center= title
+    h2.div_center.action_buttons
+      button#abs_mark_dnc.btn.btn-large.btn-primary Mark Excused
+      button#abs_unmark_dnc.btn.btn-large.btn-primary Mark Unexcused
+
     span.vert-space
 
     .absence_table_container
 
   script.
     execute_query_and_build_abs_table()
+
+
+    $(document).ready(function(event){
+      $('#abs_mark_dnc').click(function() {
+        mark_abs_dnc_by_id();
+      });
+
+      $('#abs_unmark_dnc').click(function() {
+        unmark_abs_dnc_by_id();
+      });
+    });

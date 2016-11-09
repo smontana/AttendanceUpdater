@@ -18,6 +18,7 @@ var utils = require('../utils')
 var projectDir = jetpack
 var srcDir = projectDir.cwd('./app')
 var destDir = projectDir.cwd('./build')
+var fs = require('fs')
 
 var paths = {
   copyFromAppDir: [
@@ -33,18 +34,6 @@ var paths = {
   ]
 }
 
-var fs = require('fs')
-var sql_data = require('./sql_task_helpers.js')
-var global_data = {
-  Absences: sql_data['Absences'],
-  Absences_Excused: sql_data['Absences_Excused'],
-  Early_Arrivals: sql_data['Early_Arrivals'],
-  Early_Arrivals_Excused: sql_data['Early_Arrivals_Excused'],
-  Late_Arrivals: sql_data['Late_Arrivals'],
-  Late_Arrivals_Excused: sql_data['Late_Arrivals_Excused']
-}
-var locals_data_file = './tmp/data.json'
-
 // -------------------------------------
 // Tasks
 // -------------------------------------
@@ -54,16 +43,6 @@ gulp.task('clean', function () {
 })
 
 // -------------------------------------
-// Get Global Data & write to file
-// -------------------------------------
-
-var set_globals = function () {
-  return global_data
-}
-
-gulp.task('set_globals', ['clean'], set_globals)
-
-// -------------------------------------
 
 var copyTask = function () {
   return projectDir.copyAsync('app', destDir.path(), {
@@ -71,8 +50,8 @@ var copyTask = function () {
     matching: paths.copyFromAppDir
   })
 }
-gulp.task('copy', ['set_globals'], copyTask)
-gulp.task('copy-watch', ['set_globals'], copyTask)
+gulp.task('copy', ['clean'], copyTask)
+gulp.task('copy-watch', copyTask)
 
 var bundleApplication = function () {
   return Q.all([
@@ -93,8 +72,8 @@ var bundleTask = function () {
   }
   return bundleApplication()
 }
-gulp.task('bundle', ['set_globals'], bundleTask)
-gulp.task('bundle-watch', ['set_globals'], bundleTask)
+gulp.task('bundle', ['clean'], bundleTask)
+gulp.task('bundle-watch', bundleTask)
 
 // ---PUG---------------------------------
 
@@ -104,17 +83,14 @@ var indexTask = function buildHTML () {
       extname: '.html'
     }))
     .pipe(plumber())
-    .pipe(data(function (file) {
-      return JSON.parse(fs.readFileSync(locals_data_file))
-    }))
     .pipe(pug({
       pretty: true,
       basedir: __dirname
     }))
     .pipe(gulp.dest(destDir.path('./')))
 }
-gulp.task('index', ['set_globals'], indexTask)
-gulp.task('index-watch', ['set_globals'], indexTask)
+gulp.task('index', ['clean'], indexTask)
+gulp.task('index-watch', indexTask)
 
 var viewsTask = function buildHTML () {
   return gulp.src('app/views/**/*.pug')
@@ -128,8 +104,8 @@ var viewsTask = function buildHTML () {
     }))
     .pipe(gulp.dest(destDir.path('views')))
 }
-gulp.task('views', ['set_globals'], viewsTask)
-gulp.task('views-watch', ['set_globals'], viewsTask)
+gulp.task('views', ['clean'], viewsTask)
+gulp.task('views-watch', viewsTask)
 
 // ---------------------------------------
 
@@ -140,17 +116,17 @@ var stylesTask = function buildHTML () {
     .pipe(plumber())
     .pipe(gulp.dest(destDir.path('styles')))
 }
-gulp.task('styles', ['set_globals'], stylesTask)
-gulp.task('styles-watch', ['set_globals'], stylesTask)
+gulp.task('styles', ['clean'], stylesTask)
+gulp.task('styles-watch', stylesTask)
 
 // ---------------------------------------
 
-gulp.task('environment', ['set_globals'], function () {
+gulp.task('environment', ['clean'], function () {
   var configFile = 'config/env_' + utils.getEnvName() + '.json'
   projectDir.copy(configFile, destDir.path('env.json'))
 })
 
-gulp.task('package-json', ['set_globals'], function () {
+gulp.task('package-json', ['clean'], function () {
   var manifest = srcDir.read('package.json', 'json')
 
   // Add "dev" suffix to name, so Electron will write all data like cookies
@@ -163,7 +139,7 @@ gulp.task('package-json', ['set_globals'], function () {
   destDir.write('package.json', manifest)
 })
 
-gulp.task('watch', ['set_globals'], function () {
+gulp.task('watch', ['clean'], function () {
   watch('app/**/*.js', batch(function (events, done) {
     gulp.start('bundle-watch', done)
   }))
@@ -181,4 +157,4 @@ gulp.task('watch', ['set_globals'], function () {
   }))
 })
 
-gulp.task('build', ['set_globals', 'bundle', 'index', 'views', 'styles', 'copy', 'environment', 'package-json'])
+gulp.task('build', ['bundle', 'index', 'views', 'styles', 'copy', 'environment', 'package-json'])

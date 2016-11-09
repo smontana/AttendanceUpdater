@@ -38,3 +38,7 @@ body {
   overflow-y: auto;
   transition: 0.5s 0.3s cubic-bezier(.55, 0, .1, 1);
 }
+
+.div-center{
+  margin:0 auto;
+}
