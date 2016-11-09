@@ -2,4 +2,23 @@ mixin add_earlies(title)
 
   .page-rows
     h1.text-center= title
+    h2.text-center.action_buttons
+      button#early_mark_dnc.btn.btn-large.btn-primary Mark Excused
+      button#early_unmark_dnc.btn.btn-large.btn-primary Mark Unexcused
+
     span.vert-space
+
+    .early_table_container
+
+  script.
+    execute_query_and_build_early_table()
+
+    $(document).ready(function(event){
+      $('#early_mark_dnc').click(function() {
+        mark_early_dnc_by_id();
+      });
+
+      $('#early_unmark_dnc').click(function() {
+        unmark_early_dnc_by_id();
+      });
+    });

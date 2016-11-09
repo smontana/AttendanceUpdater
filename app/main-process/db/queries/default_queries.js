@@ -7,9 +7,11 @@ module.exports = {
   get_lates_dms_excused: 'EmployeeServices.dbo.get_lates_dms_excused',
 
   //--Update Procs
-
-  // -- space + absence record id
+  //-- space + absence record id
   mark_absence_as_dnc: 'EmployeeServices.dbo.mark_absence_as_dnc',
-  // -- space + absence record id
-  un_mark_absence_as_dnc: 'EmployeeServices.dbo.un_mark_absence_as_dnc'
+  un_mark_absence_as_dnc: 'EmployeeServices.dbo.un_mark_absence_as_dnc',
+  mark_early_as_dnc: 'EmployeeServices.dbo.mark_early_as_dnc',
+  un_mark_early_as_dnc: 'EmployeeServices.dbo.un_mark_early_as_dnc',
+  mark_late_as_dnc: 'EmployeeServices.dbo.mark_late_as_dnc',
+  un_mark_late_as_dnc: 'EmployeeServices.dbo.un_mark_late_as_dnc'
 }

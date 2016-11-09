@@ -2,4 +2,23 @@ mixin add_lates(title)
 
   .page-rows
     h1.text-center= title
+    h2.text-center.action_buttons
+      button#late_mark_dnc.btn.btn-large.btn-primary Mark Excused
+      button#late_unmark_dnc.btn.btn-large.btn-primary Mark Unexcused
+
     span.vert-space
+
+    .late_table_container
+
+  script.
+    execute_query_and_build_late_table()
+
+    $(document).ready(function(event){
+      $('#late_mark_dnc').click(function() {
+        mark_late_dnc_by_id();
+      });
+
+      $('#late_unmark_dnc').click(function() {
+        unmark_late_dnc_by_id();
+      });
+    });
