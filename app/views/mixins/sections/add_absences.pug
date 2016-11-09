@@ -5,33 +5,6 @@ mixin add_absences(title)
     span.vert-space
 
     .absence_table_container
-      table
-        thead
-          tr
-            th ID
-            th Date
-            th Agent
-            th Notes
-            th Excused
 
-        tbody
-          - var Results = locals['Absences'];
-
-          each record in Results
-            - var d = new Date(record.FullDate);
-            - var month = d.getMonth();
-            - var day = d.getDate();
-            - var year = d.getFullYear();
-            - var pretty_date = month + '/' + day + '/' + year
-
-            if record.abs_dnc == 1
-              - var pretty_abs_dnc = 'YES'
-            else
-              - var pretty_abs_dnc = ''
-
-            tr
-              td= record.id
-              td= pretty_date
-              td= record.Agent
-              td= record.ActivityNotes
-              td= pretty_abs_dnc
+  script.
+    execute_query_and_build_abs_table()

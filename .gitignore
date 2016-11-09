@@ -10,3 +10,4 @@ Thumbs.db
 /releases/
 /tmp/
 /app/views/mixins/sections/old/
+/app/assets/js/test.js
