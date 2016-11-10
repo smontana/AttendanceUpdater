@@ -39,3 +39,20 @@ span.vert-space {
   border-style: inset;
   border-width: 1px;
 }
+
+.absence_table_container,
+.early_table_container,
+.late_table_container {
+  width: 75%;
+  margin: 0 auto;
+  border: 1.5px solid black;
+}
+
+thead {
+  text-align: center;
+}
+
+table thead tr th {
+  font-weight: bold;
+  font-size: medium;
+}
