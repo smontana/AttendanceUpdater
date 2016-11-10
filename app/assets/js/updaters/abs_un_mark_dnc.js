@@ -19,6 +19,7 @@ function update_abs_dnc_by_id () {
       query: query_default.un_mark_absence_as_dnc + ' ' + record_id
     }).then(function (data) {
       console.log('abs ids unmarked as dnc: ' + dnc_ids)
+      alert('Absence IDs marked as unexcused: ' + dnc_ids)
     }, function (err) {
       console.log(err)
     })

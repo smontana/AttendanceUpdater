@@ -16,9 +16,11 @@ mixin add_lates(title)
     $(document).ready(function(event){
       $('#late_mark_dnc').click(function() {
         mark_late_dnc_by_id();
+        reload_page();
       });
 
       $('#late_unmark_dnc').click(function() {
         unmark_late_dnc_by_id();
+        reload_page();
       });
     });

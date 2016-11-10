@@ -19,6 +19,7 @@ function update_early_dnc_by_id () {
       query: query_default.mark_early_as_dnc + ' ' + record_id
     }).then(function (data) {
       console.log('early ids marked as dnc: ' + dnc_ids)
+      alert('Early Departure IDs marked as excused: ' + dnc_ids)
     }, function (err) {
       console.log(err)
     })

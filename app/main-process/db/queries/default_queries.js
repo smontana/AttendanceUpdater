@@ -18,6 +18,10 @@ module.exports = {
   //--Pagination Queries
   //-- space + @Offset, @Limit (int)
   get_absences_dms_paginate:'EmployeeServices.dbo.get_absences_dms_paginate',
+  //-- COUNTS
+  get_absences_dms_count_for_pagination: 'EmployeeServices.dbo.get_absences_dms_count_for_pagination',
+  get_earlies_dms_count_for_pagination: 'EmployeeServices.dbo.get_earlies_dms_count_for_pagination',
+  get_lates_dms_count_for_pagination: 'EmployeeServices.dbo.get_lates_dms_count_for_pagination',
 
   //--Random Queries to be replaced by pagination
   get_absences_dms_recent_100: 'EmployeeServices.dbo.get_absences_dms_recent_100',

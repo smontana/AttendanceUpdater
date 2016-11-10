@@ -56,3 +56,33 @@ table thead tr th {
   font-weight: bold;
   font-size: medium;
 }
+
+table tbody tr td:nth-of-type(1) {
+  text-align: center;
+  vertical-align: middle;
+}
+
+table tbody tr td:nth-of-type(2) {
+  text-align: center;
+  vertical-align: middle;
+}
+
+table tbody tr td:nth-of-type(3) {
+  text-align: center;
+  vertical-align: middle;
+}
+
+table tbody tr td:nth-of-type(4) {
+  text-align: center;
+  vertical-align: middle;
+}
+
+#early_tbody tr td:nth-of-type(6) {
+  text-align: center;
+  vertical-align: middle;
+}
+
+#late_tbody tr td:nth-of-type(6) {
+  text-align: center;
+  vertical-align: middle;
+}

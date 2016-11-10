@@ -19,6 +19,7 @@ function update_late_dnc_by_id () {
       query: query_default.un_mark_late_as_dnc + ' ' + record_id
     }).then(function (data) {
       console.log('late ids unmarked as dnc: ' + dnc_ids)
+      alert('Late Arrival IDs marked as unexcused: ' + dnc_ids)
     }, function (err) {
       console.log(err)
     })
