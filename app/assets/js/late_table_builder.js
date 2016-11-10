@@ -11,7 +11,7 @@ function execute_query_and_build_late_table() {
     var late_table = '<table id="late_table" style="width:100%" border="1"><thead id="abs_thead"><tr><th>Select</th><th>ID</th><th>Excused</th><th>Date</th><th>Agent</th></tr></thead><tbody id="late_tbody">';
 
     _.forEach(query_results, function(record) {
-      var pretty_date = moment(record.FullDate).format('MM/DD/YYYY');
+      var pretty_date = moment(record.FullDate).add(1, 'd').format('MM/DD/YYYY');
       var late_dnc = '';
 
       if (record.late_dnc == 1) {
@@ -29,7 +29,7 @@ function execute_query_and_build_late_table() {
   }
 
   var sql_procedure = sql.execute({
-    query: query_default.get_lates_dms
+    query: query_default.get_lates_dms_recent_300
   }).then(function (data) {
     createLateTable(data)
   }, function (err) {

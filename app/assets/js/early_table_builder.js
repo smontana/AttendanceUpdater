@@ -11,7 +11,7 @@ function execute_query_and_build_early_table() {
     var early_table = '<table id="early_table" style="width:100%" border="1"><thead id="abs_thead"><tr><th>Select</th><th>ID</th><th>Excused</th><th>Date</th><th>Agent</th></tr></thead><tbody id="early_tbody">';
 
     _.forEach(query_results, function(record) {
-      var pretty_date = moment(record.FullDate).format('MM/DD/YYYY');
+      var pretty_date = moment(record.FullDate).add(1, 'd').format('MM/DD/YYYY');
       var early_dnc = '';
 
       if (record.early_dnc == 1) {
@@ -29,7 +29,7 @@ function execute_query_and_build_early_table() {
   }
 
   var sql_procedure = sql.execute({
-    query: query_default.get_earlies_dms
+    query: query_default.get_earlies_dms_recent_300
   }).then(function (data) {
     createEarlyTable(data)
   }, function (err) {

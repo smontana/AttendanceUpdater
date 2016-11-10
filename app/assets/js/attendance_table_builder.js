@@ -11,7 +11,7 @@ function execute_query_and_build_abs_table() {
     var abs_table = '<table id="abs_table" style="width:100%" border="1"><thead id="abs_thead"><tr><th>Select</th><th>ID</th><th>Excused</th><th>Date</th><th>Agent</th><th>Notes</th></tr></thead><tbody id="abs_tbody">';
 
     _.forEach(query_results, function(record) {
-      var pretty_date = moment(record.FullDate).format('MM/DD/YYYY');
+      var pretty_date = moment(record.FullDate).add(1, 'd').format('MM/DD/YYYY');
       var pretty_abs_dnc = '';
 
       if (record.abs_dnc == 1) {
@@ -29,7 +29,7 @@ function execute_query_and_build_abs_table() {
   }
 
   var sql_procedure = sql.execute({
-    query: query_default.get_absences_dms
+    query: query_default.get_absences_dms_recent_100
   }).then(function (data) {
     createAttendanceTable(data)
   }, function (err) {

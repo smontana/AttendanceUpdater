@@ -13,5 +13,20 @@ module.exports = {
   mark_early_as_dnc: 'EmployeeServices.dbo.mark_early_as_dnc',
   un_mark_early_as_dnc: 'EmployeeServices.dbo.un_mark_early_as_dnc',
   mark_late_as_dnc: 'EmployeeServices.dbo.mark_late_as_dnc',
-  un_mark_late_as_dnc: 'EmployeeServices.dbo.un_mark_late_as_dnc'
+  un_mark_late_as_dnc: 'EmployeeServices.dbo.un_mark_late_as_dnc',
+
+  //--Pagination Queries
+  //-- space + @Offset, @Limit (int)
+  get_absences_dms_paginate:'EmployeeServices.dbo.get_absences_dms_paginate',
+
+  //--Random Queries to be replaced by pagination
+  get_absences_dms_recent_100: 'EmployeeServices.dbo.get_absences_dms_recent_100',
+  get_earlies_dms_recent_100: 'EmployeeServices.dbo.get_earlies_dms_recent_100',
+  get_lates_dms_recent_100: 'EmployeeServices.dbo.get_lates_dms_recent_100',
+  get_earlies_dms_recent_300: 'EmployeeServices.dbo.get_earlies_dms_recent_300',
+  get_lates_dms_recent_300: 'EmployeeServices.dbo.get_lates_dms_recent_300',
+
+  //--Lookup Queries
+  get_dms_absence_agents_names: 'EmployeeServices.dbo.get_dms_absence_agents_names',
+  get_absences_dms_by_agent: 'EmployeeServices.dbo.get_absences_dms_by_agent'
 }
