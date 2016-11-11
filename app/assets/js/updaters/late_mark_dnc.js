@@ -20,6 +20,7 @@ function update_late_dnc_by_id () {
     }).then(function (data) {
       console.log('late ids marked as dnc: ' + dnc_ids)
       alert('Late Arrival IDs marked as excused: ' + dnc_ids)
+      reload_page();
     }, function (err) {
       console.log(err)
     })

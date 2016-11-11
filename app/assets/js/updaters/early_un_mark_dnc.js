@@ -20,6 +20,7 @@ function update_early_dnc_by_id () {
     }).then(function (data) {
       console.log('early ids unmarked as dnc: ' + dnc_ids)
       alert('Early Departure IDs marked as unexcused: ' + dnc_ids)
+      reload_page();
     }, function (err) {
       console.log(err)
     })

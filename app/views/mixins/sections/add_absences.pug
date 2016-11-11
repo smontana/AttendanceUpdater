@@ -17,11 +17,9 @@ mixin add_absences(title)
     $(document).ready(function(event){
       $('#abs_mark_dnc').click(function() {
         mark_abs_dnc_by_id();
-        reload_page();
       });
 
       $('#abs_unmark_dnc').click(function() {
         unmark_abs_dnc_by_id();
-        reload_page();
       });
     });

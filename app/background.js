@@ -10,8 +10,8 @@ let mainWindow
 
 app.on('ready', function () {
   var mainWindow = createWindow('main', {
-    width: 1000,
-    minWidth: 1000,
+    width: 1400,
+    minWidth: 1400,
     height: 785,
     minHeight: 785,
     autoHideMenuBar: true

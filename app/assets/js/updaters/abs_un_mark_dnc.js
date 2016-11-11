@@ -20,6 +20,7 @@ function update_abs_dnc_by_id () {
     }).then(function (data) {
       console.log('abs ids unmarked as dnc: ' + dnc_ids)
       alert('Absence IDs marked as unexcused: ' + dnc_ids)
+      reload_page();
     }, function (err) {
       console.log(err)
     })
