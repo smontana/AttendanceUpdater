@@ -8,8 +8,10 @@ mixin add_absences(title)
       button#abs_mark_dnc.btn.btn-large.btn-primary Mark Excused
       button#abs_unmark_dnc.btn.btn-large.btn-primary Mark Unexcused
     h3.text-center.action_buttons
-      button#abs_prev_page.btn.btn-large.btn-primary Prev Page
-      button#abs_next_page.btn.btn-large.btn-primary Next Page
+      button#abs_home_page.btn.btn-large.btn-primary= '<<'
+      button#abs_prev_page.btn.btn-large.btn-primary= '<'
+      button#abs_next_page.btn.btn-large.btn-primary= '>'
+      button#abs_last_page.btn.btn-large.btn-primary= '>>'
 
     span.vert-space
 
@@ -46,6 +48,22 @@ mixin add_absences(title)
 
       $('#abs_unmark_dnc').click(function() {
         unmark_abs_dnc_by_id();
+      });
+
+      $('#abs_home_page').click(function() {
+        current_abs_page = 1;
+        execute_query_and_build_abs_table(1);
+        $('#abs_page_number').text('Page #' + current_abs_page);
+        $('#abs_prev_page').hide();
+        $('#abs_next_page').show();
+      });
+
+      $('#abs_last_page').click(function() {
+        current_abs_page = abs_pages_total;
+        execute_query_and_build_abs_table(abs_pages_total);
+        $('#abs_page_number').text('Page #' + current_abs_page);
+        $('#abs_prev_page').show();
+        $('#abs_next_page').hide();
       });
 
       $('#abs_next_page').click(function() {

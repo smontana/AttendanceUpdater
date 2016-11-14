@@ -8,8 +8,10 @@ mixin add_earlies(title)
       button#early_mark_dnc.btn.btn-large.btn-primary Mark Excused
       button#early_unmark_dnc.btn.btn-large.btn-primary Mark Unexcused
     h3.text-center.action_buttons
-      button#early_prev_page.btn.btn-large.btn-primary Prev Page
-      button#early_next_page.btn.btn-large.btn-primary Next Page
+      button#early_home_page.btn.btn-large.btn-primary= '<<'
+      button#early_prev_page.btn.btn-large.btn-primary= '<'
+      button#early_next_page.btn.btn-large.btn-primary= '>'
+      button#early_last_page.btn.btn-large.btn-primary= '>>'
 
     span.vert-space
 
@@ -46,6 +48,22 @@ mixin add_earlies(title)
 
       $('#early_unmark_dnc').click(function() {
         unmark_early_dnc_by_id();
+      });
+
+      $('#early_home_page').click(function() {
+        current_early_page = 1;
+        execute_query_and_build_early_table(1);
+        $('#early_page_number').text('Page #' + current_early_page);
+        $('#early_prev_page').hide();
+        $('#early_next_page').show();
+      });
+
+      $('#early_last_page').click(function() {
+        current_early_page = early_pages_total;
+        execute_query_and_build_early_table(early_pages_total);
+        $('#early_page_number').text('Page #' + current_early_page);
+        $('#early_prev_page').show();
+        $('#early_next_page').hide();
       });
 
       $('#early_next_page').click(function() {

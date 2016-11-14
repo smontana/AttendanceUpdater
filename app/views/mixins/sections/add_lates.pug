@@ -8,8 +8,10 @@ mixin add_lates(title)
       button#late_mark_dnc.btn.btn-large.btn-primary Mark Excused
       button#late_unmark_dnc.btn.btn-large.btn-primary Mark Unexcused
     h3.text-center.action_buttons
-      button#late_prev_page.btn.btn-large.btn-primary Prev Page
-      button#late_next_page.btn.btn-large.btn-primary Next Page
+      button#late_home_page.btn.btn-large.btn-primary= '<<'
+      button#late_prev_page.btn.btn-large.btn-primary= '<'
+      button#late_next_page.btn.btn-large.btn-primary= '>'
+      button#late_last_page.btn.btn-large.btn-primary= '>>'
 
     span.vert-space
 
@@ -46,6 +48,22 @@ mixin add_lates(title)
 
       $('#late_unmark_dnc').click(function() {
         unmark_late_dnc_by_id();
+      });
+
+      $('#late_home_page').click(function() {
+        current_late_page = 1;
+        execute_query_and_build_late_table(1);
+        $('#late_page_number').text('Page #' + current_late_page);
+        $('#late_prev_page').hide();
+        $('#late_next_page').show();
+      });
+
+      $('#late_last_page').click(function() {
+        current_late_page = late_pages_total;
+        execute_query_and_build_late_table(late_pages_total);
+        $('#late_page_number').text('Page #' + current_late_page);
+        $('#late_prev_page').show();
+        $('#late_next_page').hide();
       });
 
       $('#late_next_page').click(function() {
