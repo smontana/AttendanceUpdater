@@ -14,12 +14,20 @@ function hhmmss(secs) {
   return pad(hours)+":"+pad(minutes)+":"+pad(secs);
 }
 
-function execute_query_and_build_late_table() {
+function execute_query_and_build_late_table(page_num) {
+
+  if (page_num == 1) {
+    var constructed_query = query_default.get_lates_dms_paginate_home  + ' ' + page_record_limit;
+  } else {
+    var offset = ((page_num - 1) * page_record_limit) + 1;
+    var limit = page_record_limit;
+    var constructed_query = query_default.get_lates_dms_paginate + ' ' + offset + ', ' + limit;
+  }
+
   function createLateTable(query_results) {
     var parent_el = document.getElementsByClassName("late_table_container")[0];
     var row_count = query_results.length;
     var cols = ['Select','Excused','ID','Date','Agent','Late Arrival Time (HH:mm:ss)'];
-
     var late_table = '<table id="late_table" style="width:100%" border="1"><thead id="abs_thead"><tr><th>Select</th><th>ID</th><th>Excused</th><th>Date</th><th>Agent</th><th>Late Arrival Time (HH:mm:ss)</th></tr></thead><tbody id="late_tbody">';
 
     _.forEach(query_results, function(record) {
@@ -37,12 +45,11 @@ function execute_query_and_build_late_table() {
 
     var finish_table = '</tbody></table>';
     late_table += finish_table;
-
     parent_el.innerHTML = late_table;
   }
 
   var sql_procedure = sql.execute({
-    query: query_default.get_lates_dms_recent_300
+    query: constructed_query
   }).then(function (data) {
     createLateTable(data)
   }, function (err) {

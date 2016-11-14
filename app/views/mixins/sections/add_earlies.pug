@@ -2,23 +2,96 @@ mixin add_earlies(title)
 
   .page-rows
     h1.text-center= title
+    h2.text-center
+      span#early_page_number.btn-large.btn-default
     h2.text-center.action_buttons
       button#early_mark_dnc.btn.btn-large.btn-primary Mark Excused
       button#early_unmark_dnc.btn.btn-large.btn-primary Mark Unexcused
+    h3.text-center.action_buttons
+      button#early_prev_page.btn.btn-large.btn-primary Prev Page
+      button#early_next_page.btn.btn-large.btn-primary Next Page
 
     span.vert-space
 
     .early_table_container
 
   script.
-    execute_query_and_build_early_table()
+    var current_page = 1;
+    var early_record_count;
+    var early_pages_total;
+
+    execute_query_and_build_early_table(current_page);
+    $('#early_prev_page').hide();
+
+    window.onload = get_early_counts()
+
+    function get_early_counts () {
+      sql.execute({
+        query: query_default.get_earlies_dms_count_for_pagination
+      }).then(function (data) {
+        early_record_count = data[0].early_record_count;
+        early_pages_total = Math.ceil(early_record_count / page_record_limit);
+      }, function (err) {
+        console.log(err)
+      })
+      return
+    }
 
     $(document).ready(function(event){
+      $('#early_page_number').text('Page #' + current_page);
+
       $('#early_mark_dnc').click(function() {
         mark_early_dnc_by_id();
       });
 
       $('#early_unmark_dnc').click(function() {
         unmark_early_dnc_by_id();
+      });
+
+      $('#early_next_page').click(function() {
+        var new_page = current_page  + 1;
+        execute_query_and_build_early_table(new_page);
+        current_page++
+        $('#early_page_number').text('Page #' + current_page);
+
+        if(current_page == 1) {
+          $('#early_prev_page').hide();
+          $('#early_next_page').show();
+        }else if (current_page > 1 && current_page < early_pages_total) {
+          $('#early_prev_page').show();
+          $('#early_next_page').show();
+        }else if (current_page == early_pages_total) {
+          $('#early_prev_page').show();
+          $('#early_next_page').hide();
+        }
+
+      });
+
+      $('#early_prev_page').click(function() {
+        var new_page = current_page  - 1;
+
+        if (new_page < 1) {
+          new_page = 1
+          execute_query_and_build_early_table(new_page);
+          current_page = 1
+          $('#early_prev_page').hide();
+          $('#early_next_page').show();
+        } else {
+          execute_query_and_build_early_table(new_page);
+          current_page--
+
+          if(current_page == 1) {
+            $('#early_prev_page').hide();
+            $('#early_next_page').show();
+          }else if (current_page > 1 && current_page < early_pages_total) {
+            $('#early_prev_page').show();
+            $('#early_next_page').show();
+          }else if (current_page == early_pages_total) {
+            $('#early_prev_page').show();
+            $('#early_next_page').hide();
+          }
+
+        }
+        $('#early_page_number').text('Page #' + current_page);
       });
     });

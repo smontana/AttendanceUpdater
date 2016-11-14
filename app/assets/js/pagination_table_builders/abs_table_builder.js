@@ -2,12 +2,20 @@ var sql = require('seriate');
 var _ = require('lodash');
 var moment = require('moment');
 
-function execute_query_and_build_abs_table() {
+function execute_query_and_build_abs_table(page_num) {
+
+  if (page_num == 1) {
+    var constructed_query = query_default.get_absences_dms_paginate_home  + ' ' + page_record_limit;
+  } else {
+    var offset = ((page_num - 1) * page_record_limit) + 1;
+    var limit = page_record_limit;
+    var constructed_query = query_default.get_absences_dms_paginate + ' ' + offset + ', ' + limit;
+  }
+
   function createAttendanceTable(query_results) {
     var parent_el = document.getElementsByClassName("absence_table_container")[0];
     var row_count = query_results.length;
     var cols = ['Select','Excused','ID','Date','Agent','Notes'];
-
     var abs_table = '<table id="abs_table" style="width:100%" border="1"><thead id="abs_thead"><tr><th>Select</th><th>ID</th><th>Excused</th><th>Date</th><th>Agent</th><th>Notes</th></tr></thead><tbody id="abs_tbody">';
 
     _.forEach(query_results, function(record) {
@@ -24,12 +32,11 @@ function execute_query_and_build_abs_table() {
 
     var finish_table = '</tbody></table>';
     abs_table += finish_table;
-
     parent_el.innerHTML = abs_table;
   }
 
   var sql_procedure = sql.execute({
-    query: query_default.get_absences_dms_recent_100
+    query: constructed_query
   }).then(function (data) {
     createAttendanceTable(data)
   }, function (err) {
