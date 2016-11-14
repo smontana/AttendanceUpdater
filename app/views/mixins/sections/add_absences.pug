@@ -16,11 +16,11 @@ mixin add_absences(title)
     .absence_table_container
 
   script.
-    var current_page = 1;
+    var current_abs_page = 1;
     var abs_record_count;
     var abs_pages_total;
 
-    execute_query_and_build_abs_table(current_page);
+    execute_query_and_build_abs_table(current_abs_page);
     $('#abs_prev_page').hide();
 
     window.onload = get_abs_counts()
@@ -38,7 +38,7 @@ mixin add_absences(title)
     }
 
     $(document).ready(function(event){
-      $('#abs_page_number').text('Page #' + current_page);
+      $('#abs_page_number').text('Page #' + current_abs_page);
 
       $('#abs_mark_dnc').click(function() {
         mark_abs_dnc_by_id();
@@ -49,18 +49,18 @@ mixin add_absences(title)
       });
 
       $('#abs_next_page').click(function() {
-        var new_page = current_page  + 1;
+        var new_page = current_abs_page  + 1;
         execute_query_and_build_abs_table(new_page);
-        current_page++
-        $('#abs_page_number').text('Page #' + current_page);
+        current_abs_page++
+        $('#abs_page_number').text('Page #' + current_abs_page);
 
-        if(current_page == 1) {
+        if(current_abs_page == 1) {
           $('#abs_prev_page').hide();
           $('#abs_next_page').show();
-        }else if (current_page > 1 && current_page < abs_pages_total) {
+        }else if (current_abs_page > 1 && current_abs_page < abs_pages_total) {
           $('#abs_prev_page').show();
           $('#abs_next_page').show();
-        }else if (current_page == abs_pages_total) {
+        }else if (current_abs_page == abs_pages_total) {
           $('#abs_prev_page').show();
           $('#abs_next_page').hide();
         }
@@ -68,30 +68,30 @@ mixin add_absences(title)
       });
 
       $('#abs_prev_page').click(function() {
-        var new_page = current_page  - 1;
+        var new_page = current_abs_page  - 1;
 
         if (new_page < 1) {
           new_page = 1
           execute_query_and_build_abs_table(new_page);
-          current_page = 1
+          current_abs_page = 1
           $('#abs_prev_page').hide();
           $('#abs_next_page').show();
         } else {
           execute_query_and_build_abs_table(new_page);
-          current_page--
+          current_abs_page--
 
-          if(current_page == 1) {
+          if(current_abs_page == 1) {
             $('#abs_prev_page').hide();
             $('#abs_next_page').show();
-          }else if (current_page > 1 && current_page < abs_pages_total) {
+          }else if (current_abs_page > 1 && current_abs_page < abs_pages_total) {
             $('#abs_prev_page').show();
             $('#abs_next_page').show();
-          }else if (current_page == abs_pages_total) {
+          }else if (current_abs_page == abs_pages_total) {
             $('#abs_prev_page').show();
             $('#abs_next_page').hide();
           }
 
         }
-        $('#abs_page_number').text('Page #' + current_page);
+        $('#abs_page_number').text('Page #' + current_abs_page);
       });
     });

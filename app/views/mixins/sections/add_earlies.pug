@@ -16,11 +16,11 @@ mixin add_earlies(title)
     .early_table_container
 
   script.
-    var current_page = 1;
+    var current_early_page = 1;
     var early_record_count;
     var early_pages_total;
 
-    execute_query_and_build_early_table(current_page);
+    execute_query_and_build_early_table(current_early_page);
     $('#early_prev_page').hide();
 
     window.onload = get_early_counts()
@@ -38,7 +38,7 @@ mixin add_earlies(title)
     }
 
     $(document).ready(function(event){
-      $('#early_page_number').text('Page #' + current_page);
+      $('#early_page_number').text('Page #' + current_early_page);
 
       $('#early_mark_dnc').click(function() {
         mark_early_dnc_by_id();
@@ -49,18 +49,18 @@ mixin add_earlies(title)
       });
 
       $('#early_next_page').click(function() {
-        var new_page = current_page  + 1;
+        var new_page = current_early_page  + 1;
         execute_query_and_build_early_table(new_page);
-        current_page++
-        $('#early_page_number').text('Page #' + current_page);
+        current_early_page++
+        $('#early_page_number').text('Page #' + current_early_page);
 
-        if(current_page == 1) {
+        if(current_early_page == 1) {
           $('#early_prev_page').hide();
           $('#early_next_page').show();
-        }else if (current_page > 1 && current_page < early_pages_total) {
+        }else if (current_early_page > 1 && current_early_page < early_pages_total) {
           $('#early_prev_page').show();
           $('#early_next_page').show();
-        }else if (current_page == early_pages_total) {
+        }else if (current_early_page == early_pages_total) {
           $('#early_prev_page').show();
           $('#early_next_page').hide();
         }
@@ -68,30 +68,30 @@ mixin add_earlies(title)
       });
 
       $('#early_prev_page').click(function() {
-        var new_page = current_page  - 1;
+        var new_page = current_early_page  - 1;
 
         if (new_page < 1) {
           new_page = 1
           execute_query_and_build_early_table(new_page);
-          current_page = 1
+          current_early_page = 1
           $('#early_prev_page').hide();
           $('#early_next_page').show();
         } else {
           execute_query_and_build_early_table(new_page);
-          current_page--
+          current_early_page--
 
-          if(current_page == 1) {
+          if(current_early_page == 1) {
             $('#early_prev_page').hide();
             $('#early_next_page').show();
-          }else if (current_page > 1 && current_page < early_pages_total) {
+          }else if (current_early_page > 1 && current_early_page < early_pages_total) {
             $('#early_prev_page').show();
             $('#early_next_page').show();
-          }else if (current_page == early_pages_total) {
+          }else if (current_early_page == early_pages_total) {
             $('#early_prev_page').show();
             $('#early_next_page').hide();
           }
 
         }
-        $('#early_page_number').text('Page #' + current_page);
+        $('#early_page_number').text('Page #' + current_early_page);
       });
     });
